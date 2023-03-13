@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+    color: white;
+}
+
+button {
+    border: 3px solid white;
+    cursor: pointer;
+}
+
+button:active {
+    box-shadow: 2px 2px 50px #ffffff;
+}
+
+.wrapper {
+    width: 100%;
+}
+
+.img-banner {
+    display: none;
+}
+
+.img-info {
+    width: 100%;
+}
+
+.img-info h2 {
+    padding: 30px 20px 20px;
+    font-family: Arial;
+    font-size: 50px;
+
+    color: #ffffff;
+    line-height: 44px;
+}
+
+.img-info p {
+    padding: 0px 20px 20px;
+    font-family: Arial;
+    font-size: 16px;
+    color: #ffffff;
+    line-height: 24px;
+}
+
+.img-me {
+    width: 100%;
+    border-radius: 100%;
+}
+
+.img-me:hover {
+    box-shadow: 2px 2px 50px white;
+}
+
+.buttonstyle {
+    background-color: rgb(255, 255, 255);
+    border-radius: 3px;
+    width: 10%;
+    height: 10%;
+    color: #000000;
+    cursor: pointer;
+}
+
+.buttonstyle:active {
+    box-shadow: 2px 2px 50px #ffffff;
+}
+
+.divstyle {
+    border: 5px solid rgb(255, 255, 255);
+    position: relative;
+    top: 10%;
+    left: 30%;
+    width: auto;
+}
+
+.moonclass {
+    background-color: #ffffff;
+    color: #000000;
+    width: 90px;
+    height: 90px;
+    position: absolute;
+    right: 0px;
+}
+    </style>
+</head>
+<body>
+    <img class="img-banner" src="myimage.jpg" alt="mmtuts banner">
+    <div class="wrapper">
+        <article class="img-info">
+            <img class="moonclass" src="C:\Users\Hadi\Desktop\New folder (3)\moon.svg" alt="erorr">
+            <h2>yo!</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi porro accusamus tempore provident! Eius repudiandae
+                 nisi, dolore voluptatem optio  <p>
+
+                 </p> harum maxime dolorem natus rem eveniet voluptatibus et ipsum nihil voluptates nulla distinctio, modi laboriosam illo corporis libero? Suscipit reiciendis odit, autem ea iste praesentium minima, magni delectus mollitia obcaecati quibusdam repellendus incidunt ipsa. Id labore explicabo, sequi debitis, dicta consequatur ea illo cupiditate fugiat quam beatae et eveniet fugit aperiam qui deleniti atque dolorem animi ut veritatis, laudantium eos. Ab repellendus delectus, quisquam impedit 
+                ducimus et ullam vel dignissimos! Facere officia eveniet ratione in natus doloremque accusamus sequi animi possimus!</p>
+        </article>
+        <img class="img-me" src="images/myimage.jpg" alt="erorr">
+    </div>
+    <div class="inputing">
+        <input id="textid" type="text">
+        <input id="dateid" type="date"><br>
+        <button class="buttonstyle" onclick="main()">press to add comment</button><br>
+        </div>
+        <div class="divstyle" id="lastid"></div>
+        <h1 style="margin-top:30px;">write a comment</h1>
+    <script>
+        let mainlist;
+        const laststr = JSON.parse(localStorage.getItem('mainlist'))
+        if(Array.isArray(laststr)){
+            mainlist = laststr
+        }else{
+            mainlist = [{title : 'example',duedate : '2020-23-11' ,id : 'id1'}]
+        }
+        function main(){
+            let first = document.getElementById('textid')
+            let last = first.value
+            let second = document.getElementById('dateid')
+            let finall = second.value
+            let myid = '' + new Date().getTime()
+            adding(last,finall,myid)
+            render()
+            setting()
+        }
+        function deleting(event){
+            let f = event.target
+            let s = f.id
+            ldeleting(s)
+        }
+        function adding(a,b,c){
+            mainlist.push({title:a,duedate:b,id:c})
+        }
+        function ldeleting(entrance){
+            mainlist = mainlist.filter(function(inp){
+                if(inp.id === entrance){return false}else{return true}
+            })
+            render()
+            setting()
+        }
+        function setting(){
+            localStorage.setItem('mainlist',JSON.stringify(mainlist))
+        }
+        render()
+        function render(){
+            document.getElementById('lastid').innerHTML = ''
+            mainlist.forEach(function(entrance){
+                let lastdiv = document.createElement('div')
+                lastdiv.innerText = 'You Imported ' + entrance.title + ' ' + entrance.duedate
+                let myint = document.getElementById('lastid')
+                myint.appendChild(lastdiv)
+
+                let mybutton = document.createElement('button')
+                mybutton.innerText = 'delete'
+                mybutton.onclick = deleting
+                mybutton.id = entrance.id
+                lastdiv.appendChild(mybutton)
+            })
+        }
+    </script>
+</body>
+</html>
